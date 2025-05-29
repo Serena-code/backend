@@ -1,49 +1,57 @@
-let productos = []
+const { models } = require('../../sequelize');
 
-export const getAllProducts = (req, res) => {
-    res.status(200).json(productos);
+async function getAll (req,res){
+    const productos = await models.producto.findAll()
+    res.status(200).json(productos)
 }
 
-export const addProducts = (req, res) => {
-    const { nombre = null, precio = null, stock = null, descripcion = null} = req.body;
-    if(!nombre || !precio || !stock || !descripcion){
-        return res.status(400).json({ message: 'Todos los campos son requeridos'});
+async function getById(req,res) {
+    const id = req.params.id
+    const producto = await models.producto.findByPk(id)
+    if(producto){
+        res.status(200).jason(producto)
+    }else{
+        res.status(404).send('404 - Not Found')
     }
-    const nuevoProducto = {
-        id: productos.lenght + 1,
-        nombre,
-        precio,
-        stock,
-        descripcion
-    };
-    productos.push(nuevoProducto);
-    res.status(201).json(nuevoProducto);
 }
 
-export const actualizarProducto = (req, res) => {
-    const {idProducto} = req.params;
-    const productIndex = productos.findIndex(producto => producto.id === parseInt(idProducto));
-
-    if(productIndex === -1){
-        return res.status(400).json({ message: 'Producto no encontrado'});
+async function create (req,res){
+    if(req.body.id){
+        res.status(400).send('Bad request: ID should not be provided, since it is determined automatically by the database.')
+    }else{
+        await models.producto.create(req.body)
+        res.status(200).end()
     }
-
-    const {nombre, precio, stock, descripcion} = req.body;
-    if(!nombre || !precio || !stock || !descripcion){
-        return res.status(400).json({ message: 'Todos los campos son requeridos'})
-    }
-    productos[productIndex] = {id: parseInt(idProducto), nombre, precio, stock, descripcion};
-    res.status(200).json(productos[productIndex]);
 }
 
-export const eliminarProducto = (req, res) => {
-    const { idProducto } = req.params;
-    const productIndex = productos.findIndex(producto => producto.id === parseInt(idProducto));
-    
-    if (productIndex === -1) {
-        return res.status(404).json({ message: 'Producto no encontrado' });
+async function update(req,res){
+    const id = req.params.id
+    if(req.body.id === id){
+        await models.producto.update(req.body,{
+            where: {
+                id:id
+            }
+        })
+        res.status(200).end()
+    }else{
+        res.status(400).send('Bad request: param ID does not mach body ID')
     }
-    
-    productos.splice(productIndex, 1);
-    res.status(204).send();
+}
+
+async function remove(req,res){
+    const id = req.params.id
+    await models.category.destroy ({
+        where:{
+            id:id
+        }
+    })
+    res.status(200).end()
+}
+
+module.exports = {
+    getAll,
+    getById,
+    create,
+    update,
+    remove,
 }
