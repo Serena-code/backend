@@ -135,4 +135,6 @@ ProductosPedido.belongsTo(Producto);
 cliente.hasMany(pedido)
 pedido.belongsTo(cliente)
 
+await sequelize.sync()
+
 module.exports = sequelize;
