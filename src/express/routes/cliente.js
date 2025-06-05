@@ -30,7 +30,11 @@ async function update(req,res) {
 
 async function remove(req,res) {
     const id = req.params.id;
+<<<<<<< HEAD
     await models.cliente.destroy({as
+=======
+    await models.cliente.destroy({
+>>>>>>> 30ebe2da0f5f2ffdd10088f69649845bf656931f
         where: {
             id:id
         }
