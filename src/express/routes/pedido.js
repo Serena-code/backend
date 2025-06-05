@@ -23,6 +23,21 @@ async function create (req,res){
         res.status(201).end()
     }
 }
+async function update(req,res){
+    const id = req.params.id;
+    if(req.body.id === id) {
+        const {monto} = req.body
+        const updatedata = {monto}
+        await models.pedido.update(updatedata, {
+            where: {
+                id: id
+            }
+        });
+        res.status(200).end();
+    } else {
+        res.status(400).send(`Bad request: param ID(${id}) does not match body ID (${req.body.id}).`);   
+    }
+}
 async function remove (req,res){
     const id = req.params.id
     await models.pedido.destroy({
