@@ -2,12 +2,12 @@ const {models} = require('../../sequelize');
 
 async function getAll(req, res) {
     const presupuestos = await models.presupuesto.findAll();
-    res.status(200).json(presupuesto);
+    res.status(200).json(presupuestos);
 }
 
 async function getById(req, res) {
     const id = req.params.id;
-    const presupuesto = await models.presupuesto.findBiPk(id);
+    const presupuesto = await models.presupuesto.findByPk(id);
     if(presupuesto){
         res.status(200).json(presupuesto);
     }else{
@@ -24,8 +24,23 @@ async function create(req, res) {
     }
 };
 
+async function update(req,res){
+    const id = req.params.id
+    if(req.body.id === id){
+        await models.presupuesto.update(req.body,{
+            where: {
+                id:id
+            }
+        })
+        res.status(200).end()
+    }else{
+        res.status(400).send('Bad request: param ID does not mach body ID')
+    }
+}
+
 module.exports = {
     getAll,
     getById,
     create,
+    update
 };
