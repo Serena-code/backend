@@ -40,8 +40,8 @@ sequelize.define('productoPedido',{
 		primaryKey: true,
 		autoIncrement: true
 	},
-	cantidad:{
-		type: DataTypes.INTEGER,
+	monto:{
+		type: DataTypes.FLOAT,
 		allowNull: false
 	},
 

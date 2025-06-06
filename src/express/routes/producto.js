@@ -9,7 +9,7 @@ async function getById(req,res) {
     const id = req.params.id
     const producto = await models.producto.findByPk(id)
     if(producto){
-        res.status(200).jason(producto)
+        res.status(200).json(producto)
     }else{
         res.status(404).send('404 - Not Found')
     }
@@ -40,7 +40,7 @@ async function update(req,res){
 
 async function remove(req,res){
     const id = req.params.id
-    await models.category.destroy ({
+    await models.producto.destroy ({
         where:{
             id:id
         }

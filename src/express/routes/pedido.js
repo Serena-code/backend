@@ -47,10 +47,25 @@ async function remove (req,res){
     })
     res.status(200).end()
 }
+
+async function addProducto(req,res){
+    const {idpedido} = req.params
+    const {idproducto,monto} = req.body  
+    const dataProducto = models.pedido.findByPk(idpedido)
+    if(dataProducto){
+        await models.productoPedido.create({"idpedido":idpedido,"idproducto": idproducto,"monto":monto})
+        res.status(201).end()
+    }else{
+        res.status(400).send('Bad request: ID should not be provided, since it is determined automatically by the database.')
+    }  
+
+}
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
     remove,
+    addProducto
 }
