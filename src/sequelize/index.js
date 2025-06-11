@@ -21,7 +21,7 @@ sequelize.define('producto',{
 		allowNull: false
 	},
 	stock:{
-		type: DataTypes.INTERGER,
+		type: DataTypes.INTEGER,
 		allowNull: false
 	},
 	descripcion:{
@@ -40,8 +40,8 @@ sequelize.define('productoPedido',{
 		primaryKey: true,
 		autoIncrement: true
 	},
-	cantidad:{
-		type: DataTypes.INTERGER,
+	monto:{
+		type: DataTypes.FLOAT,
 		allowNull: false
 	},
 
@@ -62,7 +62,7 @@ sequelize.define('cliente',{
 		allowNull: false
 	},
 	cuit:{
-		type: DataTypes.INTERGER,
+		type: DataTypes.INTEGER,
 		allowNull: false
 	},
 	email:{
@@ -81,10 +81,6 @@ sequelize.define('pedido',{
 		primaryKey: true,
 		autoIncrement: true
 	},
-	createdDate:{
-		type: DataTypes.DATE,
-		allowNull: false
-	},
 	monto:{
 		type: DataTypes.FLOAT,
 		allowNull: false
@@ -95,10 +91,6 @@ sequelize.define('presupuesto',{
 		type: DataTypes.INTEGER,
 		primaryKey: true,
 		autoIncrement: true
-	},
-	createdDate:{
-		type: DataTypes.DATE,
-		allowNull: false
 	},
 	estado:{
 		type: DataTypes.BOOLEAN,
@@ -111,10 +103,6 @@ sequelize.define('pago',{
 		type: DataTypes.INTEGER,
 		primaryKey: true,
 		autoIncrement: true
-	},
-	createdDate:{
-		type: DataTypes.DATE,
-		allowNull: false
 	}
 })
 
@@ -126,13 +114,15 @@ presupuesto.belongsTo(pedido)
 presupuesto.hasOne(pago)
 pago.belongsTo(presupuesto)
 
-Pedido.hasMany(ProductosPedido);
-ProductosPedido.belongsTo(Pedido);
+pedido.hasMany(productoPedido);
+productoPedido.belongsTo(pedido);
 
-Producto.hasMany(ProductosPedido);
-ProductosPedido.belongsTo(Producto);
+producto.hasMany(productoPedido);
+productoPedido.belongsTo(producto);
 
 cliente.hasMany(pedido)
 pedido.belongsTo(cliente)
+
+
 
 module.exports = sequelize;

@@ -1,6 +1,7 @@
 const {models} =require('../../sequelize')
 
 async function getAll(req, res) {
+    console.log("GET /api/cliente recibido");
     const cliente = await models.cliente.findAll();
     res.status(200).json(cliente);
 };
@@ -16,7 +17,7 @@ async function create(req, res) {
 
 async function update(req,res) {
     const id = req.params.id;
-    if(req.bosy.id === id) {
+    if(req.body.id === id) {
         await models.cliente.update(req.body, {
             where: {
                 id: id
