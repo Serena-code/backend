@@ -5,6 +5,15 @@ async function getAll(req, res) {
     const cliente = await models.cliente.findAll();
     res.status(200).json(cliente);
 };
+async function getById(req, res) {
+    const id = req.params.id;
+    const cliente = await models.cliente.findByPk(id); 
+    if (cliente) {
+        res.status(200).json(cliente);
+    } else {
+        res.status(404).send('Cliente no encontrado');
+    }
+}
 
 async function create(req, res) {
     if (req.body.id) {
@@ -44,4 +53,5 @@ module.exports = {
     create,
     update,
     remove,
+    getById,
 }

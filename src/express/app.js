@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 
 
@@ -21,6 +20,7 @@ app.get('/api/cliente',routes.cliente.getAll)
 app.post('/api/cliente',routes.cliente.create)
 app.put('/api/cliente/:id',routes.cliente.update)
 app.delete('/api/cliente/:id',routes.cliente.remove)
+app.get('/api/cliente/:id', routes.cliente.getById)
 
 app.get('/api/pago', routes.pago.getAll)
 app.get('/api/pago/:id', routes.pago.getById)
