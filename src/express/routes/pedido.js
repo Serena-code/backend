@@ -19,8 +19,8 @@ async function create (req,res){
     if(req.body.id){
         res.status(400).send('Bad request: ID should not be provided, since it is determined automatically by the database.')
     }else{
-        await models.pedido.create(req.body)
-        res.status(201).end()
+        const pedido = await models.pedido.create(req.body)
+        res.status(201).send({'id': req.body.id})
     }
 }
 async function update(req,res){

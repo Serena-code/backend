@@ -13,7 +13,7 @@ async function init() {
 		console.log(error.message);
 		process.exit(1);
 	}
-
+	
     // sync models (create tables if they don't exist)
     await sequelize.sync();
 
