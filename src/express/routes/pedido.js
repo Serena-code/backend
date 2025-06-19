@@ -1,15 +1,26 @@
 const {models} = require('../../sequelize')
 
 async function getAll(req,res){
-    const pedidos = await models.pedido.findAll()
+    const pedidos = await models.pedido.findAll({
+        include: [{
+            model: models.cliente,
+            attributes: ['nombre', 'cuit']  // Solo incluimos los campos que necesitamos
+        }]
+    })
     res.status(200).json(pedidos)
 }
 
 async function getById(req,res){
     const id = req.params.id
-    const pedido = await models.pedido.findByPk(id)
+    const pedido = await models.pedido.findByPk(id, {
+        include: [{
+            model: models.cliente,
+            attributes: ['nombre', 'cuit']  // Solo incluimos los campos que necesitamos
+        }]
+    })
+
     if(pedido){
-        res.status(200).json(item)
+        res.status(200).json(pedido)
     }else{
         res.status(404).send('404 - Not Found')
     }
