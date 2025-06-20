@@ -19,8 +19,9 @@ async function create(req, res) {
     if(req.body.id){
         res.status(400).send('No se debe proporcionar el ID, ya que la base de datos lo determina automáticamente')
     } else {
-        await models.presupuesto.create(req.body);
-        res.status(201).end();
+        const presupuestos = await models.presupuesto.create(req.body);
+        res.status(201).send({'id': presupuestos.id})
+        console.log(presupuestos.id)
     }
 };
 
