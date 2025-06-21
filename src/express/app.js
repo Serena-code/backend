@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const routes = {
     cliente: require('./routes/cliente'),
-    pago: require('./routes/Pago'),
+    pago: require('./routes/pago'),
     pedido: require('./routes/pedido'),
     presupuesto: require('./routes/presupuesto'),
     producto: require('./routes/producto')

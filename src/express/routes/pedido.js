@@ -4,7 +4,7 @@ async function getAll(req,res){
     const pedidos = await models.pedido.findAll({
         include: [{
             model: models.cliente,
-            attributes: ['nombre', 'cuit']  // Solo incluimos los campos que necesitamos
+            attributes: ['nombre', 'cuit']  
         }]
     })
     res.status(200).json(pedidos)
@@ -15,7 +15,7 @@ async function getById(req,res){
     const pedido = await models.pedido.findByPk(id, {
         include: [{
             model: models.cliente,
-            attributes: ['nombre', 'cuit']  // Solo incluimos los campos que necesitamos
+            attributes: ['nombre', 'cuit']  
         }]
     })
 

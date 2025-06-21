@@ -1,13 +1,23 @@
 const {models} = require ('../../sequelize');
 
 async function getAll(req,res) {
-    const pagos = await models.pago.findAll();
+    const pagos = await models.pago.findAll({
+        include: [{
+            model: models.presupuesto,
+            attributes: ['id', 'pedidoId']  
+        }]
+    });
     res.status(200).json(pagos);
 };
 
 async function getById(req, res) {
     const id = req.params.id;
-    const pago = await models.pago.findByPk(id);
+    const pago = await models.pago.findByPk(id, {
+        include: [{
+            model: models.presupuesto,
+            attributes: ['id', 'pedidoId']  
+        }]
+    });
     if(pago){
         res.status(200).json(pago);
     } else {
